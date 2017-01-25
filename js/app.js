@@ -57,7 +57,7 @@ var foursquare_creds = {
 };
 
 var wu_key = '08a65962d9394874';
-var w_url = "http://api.wunderground.com/api/"+ wu_key +"/conditions/q/" +
+var w_url = "https://api.wunderground.com/api/"+ wu_key +"/conditions/q/" +
               sanmiguel_coord.lat +","+sanmiguel_coord.lng + ".json";
 
 
@@ -193,7 +193,6 @@ function ViewModel() {
     var fsIcon = ''
 
     $.getJSON(url, function(data){
-      console.log(data.response.venues[0].name);
       if (data.response.venues[0].categories[0].name !== undefined){
         fsIconUrl = data.response.venues[0].categories[0].icon.prefix + 'bg_32' + 
                     data.response.venues[0].categories[0].icon.suffix;
@@ -252,7 +251,6 @@ function ViewModel() {
 
 
   $.getJSON(w_url, function(data){
-    console.log(data.current_observation.temp_f);
     self.weatherTemp(data.current_observation.temp_f +"F");
     self.weatherFaren(true);
   }).fail(function(err){
