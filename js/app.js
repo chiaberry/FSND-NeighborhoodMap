@@ -57,7 +57,8 @@ var foursquare_creds = {
 };
 
 var wu_key = '08a65962d9394874';
-var w_url = "http://api.wunderground.com/api/"+ wu_key +"/conditions/q/CA/San_Francisco.json";
+var w_url = "http://api.wunderground.com/api/"+ wu_key +"/conditions/q/" +
+              sanmiguel_coord.lat +","+sanmiguel_coord.lng + ".json";
 
 
 function ViewModel() {
@@ -185,15 +186,14 @@ function ViewModel() {
   };
 
   function windowContent(place){
-    var url = 'https://api.foursquare.com/v2/venues/search?ll='+ place.location.lat +',' + place.location.lng + '&client_id=' + foursquare_creds.ID + '&client_secret=' + foursquare_creds.SECRET + '&v=20170101';
+    var url = 'https://api.foursquare.com/v2/venues/search?ll='+ 
+               place.location.lat +',' + place.location.lng + 
+               '&client_id=' + foursquare_creds.ID + '&client_secret=' + foursquare_creds.SECRET + '&v=20170101';
     var contentString = '<div>' + '<b>' + place.name + '</b>' + '</div>';
     var fsIcon = ''
 
-    //and url
-
     $.getJSON(url, function(data){
       console.log(data.response.venues[0].name);
-      //foursqID = data.response.venues[0].id;
       if (data.response.venues[0].categories[0].name !== undefined){
         fsIconUrl = data.response.venues[0].categories[0].icon.prefix + 'bg_32' + 
                     data.response.venues[0].categories[0].icon.suffix;
@@ -211,7 +211,6 @@ function ViewModel() {
       infoWindow.open(map, place.marker);
     }).fail(function(err){
       infoWindow.setContent(contentString + '<div class="error"> Failed to access Foursquare</div>');
-
     });
   };
 
@@ -227,8 +226,6 @@ function ViewModel() {
     }
   };
 
-
-
   // PLACE OBJECT
 
   function Place(dataObj) {
@@ -237,7 +234,8 @@ function ViewModel() {
     this.marker = null;
   };
 
-
+  // Weather functions
+    
   self.changeUnits = function(){
     if (self.weatherFaren() === true) {
       $.getJSON(w_url, function(data){
