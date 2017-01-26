@@ -9,6 +9,6 @@ In the upper right hand corner of the page is the current temperature from Weath
 
 ## How to run
 
-Copy all the files onto your local machine, click index.html to run. You must be connected to the internet for the project to load.
+Copy all the files onto your local machine, click `index.html` to launch. You must be connected to the internet for the project to load.
 
 Conversely, you can see the map at https://chiaberry.github.io
