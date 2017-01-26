@@ -11,14 +11,13 @@ body {
 }
 
 .credit {
-	font-size: 75%;
-	margin-top: 6px;
-
+  font-size: 75%;
+  margin-top: 6px;
 }
 
 .fsIcon { 
-	margin: 0px 5px 5px 0px;
- }
+  margin: 0px 5px 5px 0px;
+}
 
 #wu {
   height: 18vh;
