@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Neighborhood Mapa</title>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Neighborhood Mapa - SMA</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
 <div class="container">
+	
 	<div class="row">
-		<div class="col-xs-8">
+		<header class="col-sm-8 col-xs-12">
 			<h1>San Miguel!</h1>
-		</div>
+		</header>
 
 		<div class="col-xs-4" id="weather">
 			<p>It is  <span class="temp" data-bind="text:$data.weatherTemp, click: changeUnits"></span> in San Miguel.
@@ -19,9 +23,8 @@
 		</div>
 	</div>
 
-	<div class="row">
-
-		<div class='col-xs-3' id='sidebar'>
+	<div class="row row-offcanvas row-offcanvas-left">
+		<div class='col-xs-6 col-sm-3 sidebar-offcanvas' id='sidebar'>
 			<input type="search" placeholder="type to filter locations..." class="form-control" data-bind="textInput: userInput, event: {keyup: filterLocations}">
 			<ul class="list-group" id="places" data-bind="foreach: visiblePlaces">
 				<a class="list-group-item" data-bind="text:$data.name, click: $root.loadWindow, css: {active: $root.isSelected($data)}">
@@ -30,8 +33,17 @@
 			<input type="button" class="btn btn-default" data-bind="click: showAllPlaces" value="Clear Filter">
 		</div>
 
-		<div class = 'col-sm-9' id="map"></div>
+		<div class = 'col-xs-12 col-sm-9'>
+			<p class="pull-left visible-xs">
+            			<button type="button" class="btn btn-primary btn-xs btn-oc" data-toggle="offcanvas"> 
+            			<span class="sr-only">Toggle List</span>
+            			<span class="glyphicon glyphicon-align-left"></span>
+            			</button>
+          		</p>
 
+          		<div id="map">
+          		</div>
+		</div>
 	</div>
 
 </div>
