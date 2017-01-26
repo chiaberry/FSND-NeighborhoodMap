@@ -1,4 +1,3 @@
-
 html,
 body {
   height: 100%;
@@ -7,12 +6,11 @@ body {
 }
 
 #map {
-  height: 450px;
+  height: 85vh;
   border-radius: 10px; 
 }
 
-
-.credit{
+.credit {
 	font-size: 75%;
 	margin-top: 6px;
 
@@ -23,10 +21,80 @@ body {
  }
 
 #wu {
-  width: 80px;
+  height: 18vh;
+  max-height: 55px;
 }
 
 #weather{
   text-align:right;
+  padding-top: 10px;
 
 }
+
+.temp {
+  color: #428bca;
+}
+
+@media only screen and (max-width: 769px) {
+
+  html,
+  body {
+  overflow-x: hidden; 
+  }
+
+  h1 {
+    font-size:24px;
+  }
+
+  #map {
+    height: 70vh;
+    margin-top: 2vh;
+    max-width: 80%;
+  }
+
+  #wu {
+    height: 5vh;
+  }
+
+  #weather {
+    text-align: left;
+  }
+
+  .btn-oc {
+    margin: 10px;
+  }
+
+  /* Bootstrap offcanvas  */
+
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all .25s ease-out;
+         -o-transition: all .25s ease-out;
+            transition: all .25s ease-out;
+  }
+
+  .row-offcanvas-left {
+    left: 0;
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left.active {
+    left: 50%; /* 6 columns */
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 50%; /* 6 columns */
+  }
+
+  .pull-left {
+    float:left!important;
+    display:block;  
+  }
+}
+
