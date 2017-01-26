@@ -4,21 +4,21 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Neighborhood Mapa - SMA</title>
+	<title>Neighborhood Mapa - SMA</title>
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
 <div class="container">
-	
+
 	<div class="row">
 		<header class="col-sm-8 col-xs-12">
 			<h1>San Miguel!</h1>
 		</header>
 
-		<div class="col-xs-4" id="weather">
-			<p>It is  <span class="temp" data-bind="text:$data.weatherTemp, click: changeUnits"></span> in San Miguel.
+		<div class="col-sm-4 col-xs-12" id="weather">
+			<p>It is  <span class="temp" data-bind="text:$data.weatherTemp, click: changeUnits">	</span> in San Miguel.
 			<img id="wu" src="https://icons.wxug.com/logos/PNG/wundergroundLogo_4c.png"></p>
 		</div>
 	</div>
@@ -34,16 +34,19 @@
 		</div>
 
 		<div class = 'col-xs-12 col-sm-9'>
-			<p class="pull-left visible-xs">
-            			<button type="button" class="btn btn-primary btn-xs btn-oc" data-toggle="offcanvas"> 
-            			<span class="sr-only">Toggle List</span>
-            			<span class="glyphicon glyphicon-align-left"></span>
-            			</button>
-          		</p>
+		  <p class="pull-left visible-xs">
+            		<button type="button" class="btn btn-primary btn-xs btn-oc" data-toggle="offcanvas"> 
+            		<span class="sr-only">Toggle List</span>
+            		<span class="glyphicon glyphicon-align-left"></span>
+            		</button>
+          	   </p>
 
-          		<div id="map">
-          		</div>
+          	   <div id="map">
+          		<p data-bind="text:$data.mapMessage"></p>
+          	   </div>
+
 		</div>
+
 	</div>
 
 </div>
@@ -54,6 +57,7 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQjxSqCo9WHGLooK-tLG7uQWf7YD52o4Y&callback=ready" onerror="googleError()">
 </script>
+
 
 
 </body>
