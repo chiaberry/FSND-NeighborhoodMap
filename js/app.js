@@ -49,15 +49,17 @@ var placesData = [ //an array of objects
       location: {lat:20.910247,
         lng: -100.746749}
     }
-]
+];
+
+var sanmiguel_coord = {lat: 20.914, lng: -100.744};
 
 var foursquare_creds = {
   ID: '2VVFDWVHS21VPEA2DWRQA1TZLIYT43RG3JRGGIJRMEDW24XE', 
   SECRET: 'OGLCVQBB1B1CXPXE1OGDSE10Y0DPG4EMV3FNBLF103BNLRNJ'
 };
 
-var wu_key = '08a65962d9394874';
-var w_url = "https://api.wunderground.com/api/"+ wu_key +"/conditions/q/" +
+var WU_KEY = '08a65962d9394874';
+var W_URL = "http://api.wunderground.com/api/"+ WU_KEY +"/conditions/q/" +
               sanmiguel_coord.lat +","+sanmiguel_coord.lng + ".json";
 
 
@@ -65,9 +67,11 @@ function ViewModel() {
 
   var self=this;
 
+  self.mapMessage = ko.observable('');
+
   // Create a new Google Map
   self.googleMap = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 20.914, lng: -100.744},
+    center: sanmiguel_coord,
     zoom: 15
   });
 
@@ -186,32 +190,35 @@ function ViewModel() {
   };
 
   function windowContent(place){
-    var url = 'https://api.foursquare.com/v2/venues/search?ll='+ 
-               place.location.lat +',' + place.location.lng + 
-               '&client_id=' + foursquare_creds.ID + '&client_secret=' + foursquare_creds.SECRET + '&v=20170101';
+    var url = 'https://api.foursquare.com/v2/venues/search?ll='+ place.location.lat +',' + place.location.lng + '&client_id=' + foursquare_creds.ID + '&client_secret=' + foursquare_creds.SECRET + '&v=20170101';
     var contentString = '<div>' + '<b>' + place.name + '</b>' + '</div>';
-    var fsIcon = ''
+    var fsIcon = '';
+
+    //and url
 
     $.getJSON(url, function(data){
+      console.log(data.response.venues[0].name);
+      //foursqID = data.response.venues[0].id;
       if (data.response.venues[0].categories[0].name !== undefined){
         fsIconUrl = data.response.venues[0].categories[0].icon.prefix + 'bg_32' + 
                     data.response.venues[0].categories[0].icon.suffix;
         contentString += '<div class="category">'+ 
                           '<img class ="fsIcon" src='+ fsIconUrl +'>' +
                           data.response.venues[0].categories[0].name + 
-                          '</div>'
+                          '</div>';
       }
       if(data.response.venues[0].contact.phone !==undefined){
         contentString += '<div> Phone number: '+ data.response.venues[0].contact.formattedPhone + '</div>';
       }
 
-      contentString += '<div class="credit">Information provided by Foursquare</div>'
+      contentString += '<div class="credit">Information provided by Foursquare</div>';
       infoWindow.setContent(contentString);
       infoWindow.open(map, place.marker);
     }).fail(function(err){
       infoWindow.setContent(contentString + '<div class="error"> Failed to access Foursquare</div>');
+
     });
-  };
+  }
 
 
   function toggleBounce(marker) {
@@ -223,7 +230,9 @@ function ViewModel() {
         marker.setAnimation(null);
       }, 2100);
     }
-  };
+  }
+
+
 
   // PLACE OBJECT
 
@@ -231,26 +240,30 @@ function ViewModel() {
     this.name = dataObj.name;
     this.location = dataObj.location;
     this.marker = null;
-  };
+  }
 
-  // Weather functions
-    
+
   self.changeUnits = function(){
     if (self.weatherFaren() === true) {
-      $.getJSON(w_url, function(data){
+      $.getJSON(W_URL, function(data){
         self.weatherTemp(data.current_observation.temp_c + "C");
         self.weatherFaren(false);
+      }).fail(function(err){
+        self.weatherTemp("Cannot access Weather Underground.");
       });
     }else {
-      $.getJSON(w_url, function(data){
+      $.getJSON(W_URL, function(data){
         self.weatherTemp(data.current_observation.temp_f + "F");
         self.weatherFaren(true);
+      }).fail(function(err){
+        self.weatherTemp("Cannot access Weather Underground.");
       });
     }
   }
 
 
-  $.getJSON(w_url, function(data){
+  $.getJSON(W_URL, function(data){
+    console.log(data);
     self.weatherTemp(data.current_observation.temp_f +"F");
     self.weatherFaren(true);
   }).fail(function(err){
@@ -266,9 +279,12 @@ function ready(){
 
 // if googlemaps fails
 function googleError(){
-  console.log("error");
-  document.getElementById('map').innerHTML="Google Maps not loading.";
+  self.mapMessage("Google Maps not loading.");
 }
 
-
+$(document).ready(function () {
+  $('[data-toggle="offcanvas"]').click(function () {
+    $('.row-offcanvas').toggleClass('active')
+  });
+});
 
